@@ -1,2 +1,2 @@
 #!/bin/sh
-python3 artisan.py
+python3 /app/bin/artisan.py
