@@ -11,6 +11,7 @@ addons:
   apt:
     packages:
     - fakeroot
+    - flatpak
 
 
 matrix:
@@ -54,7 +55,7 @@ matrix:
     cache:
       - pip
       - bundler
-      - flatpak
+
     env:
       - ARTISAN_OS=flatpak
 
