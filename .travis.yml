@@ -5,6 +5,7 @@ branches:
   only:
   - gh-pages
   - master
+  - Flatpak
 
 addons:
   apt:
@@ -15,6 +16,11 @@ matrix:
   allow_failures:
     - env: ARTISAN_OS=rpi
   include:
+  - os: linux
+    language: generic
+    dist: xenial
+    env:
+      ARTISAN_OS=flatpak
   - os: osx
     osx_image: xcode10.1 # Xcode 10.1, macOS 10.13
     python: 3.8
@@ -27,7 +33,7 @@ matrix:
       # https://docs.travis-ci.com/user/caching/#pip-cache
       pip: false
       directories:
-      - $HOME/Library/Caches/pip    
+      - $HOME/Library/Caches/pip
     env:
       - ARTISAN_OS=osx
       - HOMEBREW_NO_INSTALL_CLEANUP=1
@@ -51,7 +57,7 @@ install:
   - export GIT_VERSION=`git rev-parse --verify --short HEAD 2>/dev/null|| echo "???"`
   - sed -i'' -e "s/__revision__ = '0'/__revision__ = '$GIT_VERSION'/" src/artisanlib/__init__.py
   - .travis/install-${ARTISAN_OS}.sh
-  
+
 before_script:
   - ulimit -c unlimited -S
 
@@ -69,7 +75,5 @@ after_success:
   - export UPLOADTOOL_BODY="WARNING pre-release builds may not work. Use at your own risk."
   - if [ "$ARTISAN_OS" = "osx" ]; then bash upload.sh artisan*.dmg; fi
   - if [ "$ARTISAN_OS" = "rpi" ]; then bash upload.sh artisan*.deb; fi
-  - if [ "$ARTISAN_OS" = "linux" ]; then bash upload.sh artisan*.rpm artisan*.deb; fi 
-
- 
-
+  - if [ "$ARTISAN_OS" = "linux" ]; then bash upload.sh artisan*.rpm artisan*.deb; fi
+  - if [ "$ARTISAN_OS" = "flatpak" ]; then bash upload.sh artisan*.flatpak; fi
