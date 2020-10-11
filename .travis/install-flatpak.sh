@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -ex
+set -e
 sudo apt-get update
 
 sudo apt install -y flatpak
