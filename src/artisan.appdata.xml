@@ -1,0 +1,34 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<component type="desktop">
+  <id>org.flatpak.artisan</id>
+  <launchable type="desktop-id">org.flatpak.artisan.desktop</launchable>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Artisan</name>
+  <summary>Visual Scope for Coffee Roasters</summary>
+  <description>
+    <p xml:lang="en-GB"> Artisan is a software that helps coffee roasters record, analyze, and control roast profiles. </p>
+    <p xml:lang="en-GB"> When used in conjunction with a thermocouple data logger or a proportional–integral–derivative controller (PID controller), </p>
+    <p xml:lang="en-GB"> this software can automate the creation of roasting metrics to help make decisions that influence the final coffee flavor.</p>
+  </description>
+  <releases>
+    <release version="2.4.2" date="2020-10-02"/>
+  </releases>
+  <screenshots>
+    <screenshot type="default">
+      <image type="source">https://github.com/MAKOMO/artisan/blob/master/wiki/screenshots/artisan-cover.png?raw=true</image>
+    </screenshot>
+  </screenshots>
+  <categories>
+    <category>Utility</category>
+    <category>Science</category>
+  </categories>
+  <url type="homepage">https://artisan-scope.org/</url>
+  <url type="bugtracker">https://github.com/artisan-roaster-scope/artisan/issues</url>
+  <project_group>artisan-roaster-scope</project_group>
+  <update_contact>marko.luther_AT_gmx.net</update_contact>
+  <provides>
+    <binary>artisan</binary>
+  </provides>
+</component>
