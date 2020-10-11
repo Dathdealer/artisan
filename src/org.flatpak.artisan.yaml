@@ -1,0 +1,115 @@
+---
+app-id: org.flatpak.artisan
+runtime: org.kde.Sdk
+runtime-version: '5.15'
+sdk: org.kde.Sdk
+command: run-Artisan.sh
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --filesystem=host
+  - --device=all
+  - --share=network
+
+modules:
+- name: app-install
+  buildsystem: simple
+  build-commands:
+  - cp -r translations /app/bin/
+  - install -D artisan-alog.xml /app/bin/artisan-alog.xml
+  - install -D artisan-alrm.xml /app/bin/artisan-alrm.xml
+  - install -D artisan-alrm.xml /app/bin/artisan-alrm.xml
+  - install -D artisan-aset.xml /app/bin/artisan-aset.xml
+  - install -D artisan-wg.xml   /app/bin/aartisan-wg.xml
+  - install -D README.txt   /app/bin/README.txt
+  - install -D artisan.desktop   /app/share/applications/org.flatpak.artisan.desktop
+  - install -D artisan.appdata.xml   /app/share/metainfo/org.flatpak.artisan.xml
+  - install -D artisan.png   /app/share/icons/org.flatpak.artisan.png
+  - cp -r icons /app/bin/
+  - cp -r Wheels /app/bin/
+  - cp -r includes /app/bin/
+  - cp -r artisanlib /app/bin/
+  - cp -r const /app/bin/
+  - cp -r help /app/bin/
+  - cp -r plus /app/bin/
+
+  sources:
+  - type: dir
+    path: icons/
+    dest: icons/
+  - type: dir
+    path: Wheels/
+    dest: Wheels/
+  - type: dir
+    path: artisanlib/
+    dest: artisanlib/
+  - type: dir
+    path: const/
+    dest: const/
+  - type: dir
+    path: help/
+    dest: help/
+  - type: dir
+    path: includes/
+    dest: includes/
+  - type: dir
+    path: plus/
+    dest: plus/
+  - type: dir
+    path: translations/
+    dest: translations/
+  - type: file
+    path: requirements-linux.txt
+
+  - type: file
+    path: artisan-alog.xml
+  - type: file
+    path: artisan-alrm.xml
+  - type: file
+    path: artisan-apal.xml
+  - type: file
+    path: artisan-athm.xml
+  - type: file
+    path: artisan-aset.xml
+  - type: file
+    path: artisan-wg.xml
+  - type: file
+    path: README.txt
+
+  - type: file
+    path: artisan.desktop
+  - type: file
+    path: artisan.appdata.xml
+  - type: file
+    path: artisan.png
+
+- name: cpython
+  sources:
+  - type: archive
+    url: https://www.python.org/ftp/python/3.8.6/Python-3.8.6.tar.xz
+    sha256: a9e0b79d27aa056eb9cce8d63a427b5f9bab1465dee3f942dcfdb25a82f4ab8a
+
+
+- name: pip-install
+  buildsystem: simple
+  build-options:
+    build-args:
+    - "--share=network"
+  build-commands:
+  - pip3 install --upgrade pip
+  - pip3 install -r requirements-linux.txt
+  - pip3 install -r requirements.txt
+  sources:
+  - type: file
+    path: requirements-linux.txt
+  - type: file
+    path: requirements.txt
+
+- name: run-Artisan
+  buildsystem: simple
+  build-commands:
+  - install -D run-Artisan.sh /app/bin/run-Artisan.sh
+  sources:
+  - type: file
+    path: run-Artisan.sh
