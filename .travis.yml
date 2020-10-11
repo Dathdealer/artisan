@@ -15,6 +15,11 @@ matrix:
   allow_failures:
     - env: ARTISAN_OS=rpi
   include:
+  - os: linux
+    language: generic
+    dist: xenial
+    env:
+      ARTISAN_OS=flatpak
   - os: osx
     osx_image: xcode10.1 # Xcode 10.1, macOS 10.13
     python: 3.8
@@ -69,7 +74,5 @@ after_success:
   - export UPLOADTOOL_BODY="WARNING pre-release builds may not work. Use at your own risk."
   - if [ "$ARTISAN_OS" = "osx" ]; then bash upload.sh artisan*.dmg; fi
   - if [ "$ARTISAN_OS" = "rpi" ]; then bash upload.sh artisan*.deb; fi
-  - if [ "$ARTISAN_OS" = "linux" ]; then bash upload.sh artisan*.rpm artisan*.deb; fi 
-
- 
-
+  - if [ "$ARTISAN_OS" = "linux" ]; then bash upload.sh artisan*.rpm artisan*.deb; fi
+  - if [ "$ARTISAN_OS" = "flatpak" ]; then bash upload.sh artisan*.flatpak; fi
