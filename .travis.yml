@@ -12,6 +12,7 @@ addons:
     packages:
     - fakeroot
 
+
 matrix:
   allow_failures:
     - env: ARTISAN_OS=rpi
@@ -53,6 +54,7 @@ matrix:
     cache:
       - pip
       - bundler
+      - flatpak
     env:
       - ARTISAN_OS=flatpak
 
