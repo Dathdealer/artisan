@@ -1,4 +1,4 @@
 #!/bin/sh
 set -ex
 cd src
-bash build-flatpak.sh
+ ./build-flatpak.sh

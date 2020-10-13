@@ -1,3 +1,2 @@
-flatpak-builder --repo=repo build-dir org.flatpak.artisan.yaml --force-clean
-cd
-flatpak build-bundle repo artisan.flatpak org.flatpak.artisan --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
+flatpak-builder --repo=repos build-dir org.flatpak.artisan.yaml --force-clean
+flatpak build-bundle repos artisan.flatpak org.flatpak.artisan --runtime-repo=https://flathub.org/repo/flathub.flatpakrepo
