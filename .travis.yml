@@ -55,7 +55,6 @@ matrix:
     cache:
       - pip
       - bundler
-
     env:
       - ARTISAN_OS=flatpak
 
