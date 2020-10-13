@@ -64,10 +64,12 @@ matrix:
 install:
   - export GIT_VERSION=`git rev-parse --verify --short HEAD 2>/dev/null|| echo "???"`
   - sed -i'' -e "s/__revision__ = '0'/__revision__ = '$GIT_VERSION'/" src/artisanlib/__init__.py
+  - chmod +x .travis/install-${ARTISAN_OS}.sh
   - .travis/install-${ARTISAN_OS}.sh
 
 before_script:
   - ulimit -c unlimited -S
+  - chmod +x .travis/script-${ARTISAN_OS}.sh
 
 after_failure:
   - find .  -name "core*"
