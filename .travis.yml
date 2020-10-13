@@ -9,11 +9,7 @@ branches:
 
 addons:
 apt:
-  sources:
-    - ppa:alexlarsson/flatpak
   packages:
-    - flatpak
-    - flatpak-builder
     - fakeroot
 
 

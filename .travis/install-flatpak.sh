@@ -1,6 +1,9 @@
 #!/bin/sh
 
 set -ex
+sudo add-apt-repository -y ppa:alexlarsson/flatpak
+sudo apt-get install -y flatpak
+sudo apt-get install -y flatpak-builder
 
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub org.kde.Sdk//5.11
