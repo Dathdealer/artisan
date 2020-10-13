@@ -8,8 +8,12 @@ branches:
   - Flatpak
 
 addons:
-  apt:
-    packages:
+apt:
+  sources:
+    - ppa:alexlarsson/flatpak
+  packages:
+    - flatpak
+    - flatpak-builder
     - fakeroot
 
 
@@ -52,12 +56,7 @@ matrix:
   - os: linux
     python: 3.8 # NOTE: on update, update also the var PYTHON_PATH in src/build-linux.sh
     dist: xenial
-      apt:
-        sources:
-          - ppa:alexlarsson/flatpak
-        packages:
-          - flatpak
-          - flatpak-builder
+    addons:
     env:
       - ARTISAN_OS=flatpak
 
