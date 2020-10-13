@@ -52,9 +52,12 @@ matrix:
   - os: linux
     python: 3.8 # NOTE: on update, update also the var PYTHON_PATH in src/build-linux.sh
     dist: xenial
-    cache:
-      - pip
-      - bundler
+      apt:
+        sources:
+          - ppa:alexlarsson/flatpak
+        packages:
+          - flatpak
+          - flatpak-builder
     env:
       - ARTISAN_OS=flatpak
 
