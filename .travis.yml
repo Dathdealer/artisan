@@ -15,40 +15,40 @@ apt:
 
 
 matrix:
-  allow_failures:
-    - env: ARTISAN_OS=rpi
-  include:
-  - os: osx
-    osx_image: xcode10.1 # Xcode 10.1, macOS 10.13
-    python: 3.8
-    language: generic
-    before_cache:
+  #allow_failures:
+  #  - env: ARTISAN_OS=rpi
+  #include:
+  #- os: osx
+  #  osx_image: xcode10.1 # Xcode 10.1, macOS 10.13
+  #  python: 3.8
+  #  language: generic
+  #  before_cache:
       # - brew cleanup
-      - rm -f "$HOME/Library/Caches/pip/log/debug.log"
-    cache:
+  #    - rm -f "$HOME/Library/Caches/pip/log/debug.log"
+  #  cache:
       # As for now travis caches only "$HOME/.cache/pip"
       # https://docs.travis-ci.com/user/caching/#pip-cache
-      pip: false
-      directories:
-      - $HOME/Library/Caches/pip
-    env:
-      - ARTISAN_OS=osx
-      - HOMEBREW_NO_INSTALL_CLEANUP=1
-      - HOMEBREW_NO_ANALYTICS=1
-      - MACOSX_DEPLOYMENT_TARGET=10.13
-  - os: linux
-    python: 3.8 # NOTE: on update, update also the var PYTHON_PATH in src/build-linux.sh
-    dist: xenial
-    cache:
-      - pip
-      - bundler
-    env:
-      - ARTISAN_OS=linux
-  - os: linux
-    language: generic
-    dist: xenial
-    env:
-      - ARTISAN_OS=rpi
+  #    pip: false
+  #    directories:
+  #    - $HOME/Library/Caches/pip
+  #  env:
+  #    - ARTISAN_OS=osx
+  #    - HOMEBREW_NO_INSTALL_CLEANUP=1
+  #    - HOMEBREW_NO_ANALYTICS=1
+  #    - MACOSX_DEPLOYMENT_TARGET=10.13
+  #- os: linux
+  #  python: 3.8 # NOTE: on update, update also the var PYTHON_PATH in src/build-linux.sh
+  #  dist: xenial
+  #  cache:
+  #    - pip
+  #    - bundler
+  #  env:
+  #    - ARTISAN_OS=linux
+  #- os: linux
+#    language: generic
+#    dist: xenial
+#    env:
+#      - ARTISAN_OS=rpi
   - os: linux
     python: 3.8 # NOTE: on update, update also the var PYTHON_PATH in src/build-linux.sh
     dist: xenial
