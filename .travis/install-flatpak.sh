@@ -3,6 +3,7 @@
 set -ex
 sudo add-apt-repository -y ppa:alexlarsson/flatpak
 sudo apt-get update
+sudo apt-get install -y elfutils
 sudo apt-get install -y flatpak
 sudo apt-get install -y flatpak-builder
 
