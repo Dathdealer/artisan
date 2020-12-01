@@ -3,8 +3,6 @@ language: python
 # safelist
 branches:
   only:
-  - gh-pages
-  - master
   - Flatpak
 
 addons:
@@ -14,14 +12,11 @@ addons:
 
 
 
-matrix:
+jobs:
   include:
   - os: linux
     python: 3.8 # NOTE: on update, update also the var PYTHON_PATH in src/build-linux.sh
     dist: xenial
-     cache:
-      - pip
-      - bundler
     env:
       - ARTISAN_OS=flatpak
 
