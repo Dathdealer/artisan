@@ -13,6 +13,49 @@ finish-args:
   - --share=network
 
 modules:
+- name: snap7
+  buildsystem: simple
+  sources:
+  - type: archive
+    archive-type: 7z
+    url: https://netcologne.dl.sourceforge.net/project/snap7/1.4.2/snap7-full-1.4.2.7z
+    sha256: 1f4270cde8684957770a10a1d311c226e670d9589c69841a9012e818f7b9f80e
+  build-commands:
+    - (cd ./build/unix && make -f x86_64_linux.mk -j4 all &&  make -f x86_64_linux.mk LibInstall=/app/ install)
+
+- name: libudev-zero
+  buildsystem: simple
+  sources:
+  - type: archive
+    url: https://github.com/illiliti/libudev-zero/archive/0.4.5.tar.gz
+    sha256: 12d1b15478b033adbb1f34d49053afa5f42d862b82b2085e025dc184f5b64450
+  build-commands:
+    - make ./Makefile &&  make -f ./Makefile PREFIX=/app/ install
+
+- name: libusb
+  buildsystem: simple
+  sources:
+  - type: archive
+    url: https://github.com/libusb/libusb/releases/download/v1.0.23/libusb-1.0.23.tar.bz2
+    sha256: db11c06e958a82dac52cf3c65cb4dd2c3f339c8a988665110e0d24d19312ad8d
+  build-commands:
+    - (./configure --prefix=/app/ && make -j4 &&  make install)
+
+
+- name: Phidgets
+  buildsystem: simple
+  sources:
+    - type: archive
+      url: https://www.phidgets.com/downloads/phidget22/libraries/linux/libphidget22.tar.gz
+      sha256: 6e740c47abaf7aa90ef11054e0d708d23e5b2b394445c52538c95a5c598ad048
+
+  build-commands:
+    - ./configure --prefix=/usr
+    - make -j4
+    - sudo make install
+    #- cp plat/linux/udev/* ../src/debian/etc/udev/rules.d)
+
+
 - name: app-install
   buildsystem: simple
   build-commands:
