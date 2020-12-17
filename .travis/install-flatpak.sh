@@ -1,12 +1,12 @@
 #!/bin/sh
 
 set -ex
-sudo add-apt-repository -y ppa:alexlarsson/flatpak
-sudo apt-get update
-sudo apt-get install -y elfutils
-sudo apt-get install -y flatpak
-sudo apt-get install -y flatpak-builder
+fakeroot add-apt-repository -y ppa:alexlarsson/flatpak
+fakeroot apt-get update
+fakeroot apt-get install -y elfutils
+fakeroot apt-get install -y flatpak
+fakeroot apt-get install -y flatpak-builder
 
-sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-sudo flatpak install -y flathub org.kde.Sdk//5.11
-sudo flatpak install -y  flathub org.kde.Platform//5.11
+fakeroot flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+fakeroot flatpak install -y flathub org.kde.Sdk//5.11
+fakeroot flatpak install -y  flathub org.kde.Platform//5.11
