@@ -1426,6 +1426,7 @@ class tgraphcanvas(FigureCanvas):
         self.backgroundpath = ""
         self.backgroundUUID = None
         self.backgroundmovespeed = 30
+        self.backgroundShowFullflag = False
         self.titleB = ""
         self.roastbatchnrB = 0
         self.roastbatchprefixB = ""
@@ -3553,9 +3554,14 @@ class tgraphcanvas(FigureCanvas):
                         ts = tx
 
                     # if more than max cool (from statistics) past DROP and not yet COOLend turn the time LCD red:
-                    if aw.qmc.timeindex[0]!=-1 and aw.qmc.timeindex[6] and not aw.qmc.timeindex[7] and len(self.timex) > self.timeindex[6]:
-                        aw.lcd1.setStyleSheet("QLCDNumber { border-radius: 4; color: %s; background-color: %s;}"%(aw.lcdpaletteF["slowcoolingtimer"],aw.lcdpaletteB["slowcoolingtimer"]))
-                        aw.qmc.setTimerLargeLCDcolorSignal.emit(aw.lcdpaletteF["slowcoolingtimer"],aw.lcdpaletteB["slowcoolingtimer"])
+                    if aw.qmc.timeindex[0]!=-1 and aw.qmc.timeindex[6] and not aw.qmc.timeindex[7] and ((len(self.timex) == 1+self.timeindex[6]) or (4*60+2 > (tx - aw.qmc.timex[aw.qmc.timeindex[6]]) > 4*60)):
+                        # switch LCD color to "cooling" color (only after 4min cooling we switch to slowcoolingtimer color)
+                        if (tx - aw.qmc.timex[aw.qmc.timeindex[6]]) > 4*60:
+                            timer_color = "slowcoolingtimer"
+                        else:
+                            timer_color = "rstimer"
+                        aw.lcd1.setStyleSheet("QLCDNumber { border-radius: 4; color: %s; background-color: %s;}"%(aw.lcdpaletteF[timer_color],aw.lcdpaletteB[timer_color]))
+                        aw.qmc.setTimerLargeLCDcolorSignal.emit(aw.lcdpaletteF[timer_color],aw.lcdpaletteB[timer_color])
 
                     self.setLCDtime(ts)
             finally:
@@ -6658,7 +6664,8 @@ class tgraphcanvas(FigureCanvas):
                                     stemp3B = self.smooth_list(tx,self.fill_gaps(self.temp2BX[n3]),window_len=self.curvefilter,decay_smoothing=decay_smoothing_p,a_lin=tx_lin)
                                 else:
                                     stemp3B = self.stemp2BX[n3]
-                            stemp3B = [None]*bcharge_idx + stemp3B[bcharge_idx:bdrop_idx+1] + [None]*(len(self.timeB)-bdrop_idx-1)
+                            if not self.backgroundShowFullflag:
+                                stemp3B = [None]*bcharge_idx + stemp3B[bcharge_idx:bdrop_idx+1] + [None]*(len(self.timeB)-bdrop_idx-1)
                             self.l_back3, = self.ax.plot(self.extratimexB[n3], stemp3B, markersize=self.XTbackmarkersize,marker=self.XTbackmarker,
                                                         sketch_params=None,path_effects=[],transform=trans,
                                                         linewidth=self.XTbacklinewidth,linestyle=self.XTbacklinestyle,drawstyle=self.XTbackdrawstyle,color=self.backgroundxtcolor,
@@ -6692,7 +6699,8 @@ class tgraphcanvas(FigureCanvas):
                                     stemp4B = self.smooth_list(tx,self.fill_gaps(self.temp2BX[n4]),window_len=self.curvefilter,decay_smoothing=decay_smoothing_p,a_lin=tx_lin)
                                 else:
                                     stemp4B = self.stemp2BX[n4]
-                            stemp4B = [None]*bcharge_idx + stemp4B[bcharge_idx:bdrop_idx+1] + [None]*(len(self.timeB)-bdrop_idx-1)
+                            if not self.backgroundShowFullflag:
+                                stemp4B = [None]*bcharge_idx + stemp4B[bcharge_idx:bdrop_idx+1] + [None]*(len(self.timeB)-bdrop_idx-1)
                             self.l_back4, = self.ax.plot(self.extratimexB[n4], stemp4B, markersize=self.YTbackmarkersize,marker=self.YTbackmarker,
                                                         sketch_params=None,path_effects=[],transform=trans,
                                                         linewidth=self.YTbacklinewidth,linestyle=self.YTbacklinestyle,drawstyle=self.YTbackdrawstyle,color=self.backgroundytcolor,
@@ -6701,9 +6709,11 @@ class tgraphcanvas(FigureCanvas):
 
                     #draw background
                     if aw.qmc.backgroundETcurve:
-#                        temp_etb = self.stemp1B
-                        # only draw background curve from CHARGE to DROP
-                        temp_etb = [None]*bcharge_idx + self.stemp1B[bcharge_idx:bdrop_idx+1] + [None]*(len(self.timeB)-bdrop_idx-1)
+                        if self.backgroundShowFullflag:
+                            temp_etb = self.stemp1B
+                        else:
+                            # only draw background curve from CHARGE to DROP
+                            temp_etb = [None]*bcharge_idx + self.stemp1B[bcharge_idx:bdrop_idx+1] + [None]*(len(self.timeB)-bdrop_idx-1)
                     else:
                         temp_etb = [None]*len(self.timeB)
                     self.l_back1, = self.ax.plot(self.timeB,temp_etb,markersize=self.ETbackmarkersize,marker=self.ETbackmarker,
@@ -6711,9 +6721,11 @@ class tgraphcanvas(FigureCanvas):
                                                 linewidth=self.ETbacklinewidth,linestyle=self.ETbacklinestyle,drawstyle=self.ETbackdrawstyle,color=self.backgroundmetcolor,
                                                 alpha=self.backgroundalpha,label=aw.arabicReshape(QApplication.translate("Label", "BackgroundET", None)))
                     if aw.qmc.backgroundBTcurve:
-#                        temp_btb = self.stemp2B
-                        # only draw background curve from CHARGE to DROP
-                        temp_btb = [None]*bcharge_idx + self.stemp2B[bcharge_idx:bdrop_idx+1] + [None]*(len(self.timeB)-bdrop_idx-1)
+                        if self.backgroundShowFullflag:
+                            temp_btb = self.stemp2B
+                        else:
+                            # only draw background curve from CHARGE to DROP
+                            temp_btb = [None]*bcharge_idx + self.stemp2B[bcharge_idx:bdrop_idx+1] + [None]*(len(self.timeB)-bdrop_idx-1)
                     else:
                         temp_btb = [None]*len(self.timeB)
                     self.l_back2, = self.ax.plot(self.timeB, temp_btb,markersize=self.BTbackmarkersize,marker=self.BTbackmarker,
@@ -6769,7 +6781,7 @@ class tgraphcanvas(FigureCanvas):
                         for p in range(len(self.backgroundEvents)):
                             if self.eventsGraphflag not in [2,4] or self.backgroundEtypes[p] > 3:
                                 event_idx = self.backgroundEvents[p]
-                                if event_idx < bcharge_idx or event_idx > bdrop_idx:
+                                if not self.backgroundShowFullflag and event_idx < bcharge_idx or event_idx > bdrop_idx:
                                     continue
                                 if self.backgroundEtypes[p] < 4:
                                     st1 = self.Betypesf(self.backgroundEtypes[p])[0] + self.eventsvaluesShort(self.backgroundEvalues[p])
@@ -11019,7 +11031,9 @@ class tgraphcanvas(FigureCanvas):
                             aw.eNumberSpinBox.blockSignals(False)
                             if aw.qmc.timeindex[0] > -1:
                                 timez = stringfromseconds(aw.qmc.timex[aw.qmc.specialevents[Nevents]]-aw.qmc.timex[aw.qmc.timeindex[0]])
-                                aw.etimeline.setText(timez)
+                            else:
+                                timez = stringfromseconds(aw.qmc.timex[aw.qmc.specialevents[Nevents]])
+                            aw.etimeline.setText(timez)
                             aw.etypeComboBox.setCurrentIndex(self.specialeventstype[Nevents])
                             aw.valueEdit.setText(aw.qmc.eventsvalues(self.specialeventsvalue[Nevents]))
                             aw.lineEvent.setText(self.specialeventsStrings[Nevents])
@@ -11280,7 +11294,7 @@ class tgraphcanvas(FigureCanvas):
     def calcStatistics(self,TP_index):
         statisticstimes = [0,0,0,0,0]
         try:
-            if self.timeindex[1] and self.phasesbuttonflag:
+            if self.timeindex[1]:
                 #manual dryend available
                 dryEndIndex = self.timeindex[1]
             else:
@@ -18869,8 +18883,13 @@ class ApplicationWindow(QMainWindow):
             return 0
 
     def calcAutoDeltaAxis(self):
-        if len(aw.qmc.delta1) > 3 or len(aw.qmc.delta2) > 3:
+        if not(aw.qmc.flagstart) and (len(aw.qmc.delta1) > 3 or len(aw.qmc.delta2) > 3):
             return self.calcAutoDelta(self.qmc.delta1,self.qmc.delta2,self.qmc.timeindex,self.qmc.DeltaETflag,self.qmc.DeltaBTflag)
+        elif self.qmc.flagon:
+            if aw.qmc.mode == "C":
+                return self.qmc.zlimit_C_default - 1
+            else:
+                return self.qmc.zlimit_F_default - 1
         else:
             return 0
 
@@ -21678,7 +21697,7 @@ class ApplicationWindow(QMainWindow):
                             elif cs.startswith("adjustSV(") and cs.endswith(")"):
                                 try:
                                     sv_offset = int(eval(cs[len("adjustSV("):-1]))
-                                    if self.qmc.device != 0 and self.qmc.device != 26:
+                                    if self.qmc.device != 26: # not for DTA
                                         self.adjustSVSignal.emit(sv_offset)
                                         self.sendmessage("Artisan Command: {}".format(cs))
                                 except:
@@ -23406,7 +23425,9 @@ class ApplicationWindow(QMainWindow):
                 self.lineEvent.setText(self.qmc.specialeventsStrings[currentevent-1])
                 if aw.qmc.timeindex[0] > -1:
                     timez = stringfromseconds(self.qmc.timex[self.qmc.specialevents[currentevent-1]]-self.qmc.timex[self.qmc.timeindex[0]])
-                    self.etimeline.setText(timez)
+                else:
+                    timez = stringfromseconds(self.qmc.timex[self.qmc.specialevents[currentevent-1]])
+                self.etimeline.setText(timez)
                 self.valueEdit.setText(aw.qmc.eventsvalues(aw.qmc.specialeventsvalue[currentevent-1]))
                 self.etypeComboBox.setCurrentIndex(self.qmc.specialeventstype[currentevent-1])
                 #plot little dot lines
@@ -23438,7 +23459,9 @@ class ApplicationWindow(QMainWindow):
             self.qmc.specialeventsStrings[lenevents-1] = self.lineEvent.text()
             if aw.qmc.timeindex[0] > -1:
                 newtime = self.qmc.time2index(self.qmc.timex[self.qmc.timeindex[0]]+ stringtoseconds(str(self.etimeline.text())))
-                self.qmc.specialevents[lenevents-1] = newtime
+            else:
+                newtime = self.qmc.time2index(stringtoseconds(str(self.etimeline.text())))
+            self.qmc.specialevents[lenevents-1] = newtime
 
             self.lineEvent.clearFocus()
             self.eNumberSpinBox.clearFocus()
@@ -26236,15 +26259,17 @@ class ApplicationWindow(QMainWindow):
                     computedProfile["organic_loss"] = self.float2float(weight_loss - moisture_loss)
             din = dout = 0
             # standardize unit of volume and weight to l and g
-            if volumein != 0.0 and volumeout != 0.0:
+            if volumein != 0.0:
                 volumein = self.float2float(aw.convertVolume(volumein,aw.qmc.volume_units.index(aw.qmc.volume[2]),0),4) # in l
+            if volumeout != 0.0:
                 volumeout = self.float2float(aw.convertVolume(volumeout,aw.qmc.volume_units.index(aw.qmc.volume[2]),0),4) # in l
             # store volume in l
             computedProfile["volumein"] = volumein
             computedProfile["volumeout"] = volumeout
             # store weight in kg
-            if weightin != 0.0 and weightout != 0.0:
+            if weightin != 0.0:
                 weightin = self.float2float(aw.convertWeight(weightin,aw.qmc.weight_units.index(aw.qmc.weight[2]),0),1) # in g
+            if weightout != 0.0:
                 weightout = self.float2float(aw.convertWeight(weightout,aw.qmc.weight_units.index(aw.qmc.weight[2]),0),1) # in g
             computedProfile["weightin"] = weightin
             computedProfile["weightout"] = weightout
@@ -28173,6 +28198,8 @@ class ApplicationWindow(QMainWindow):
             if settings.contains("ETBflag"):
                 aw.qmc.backgroundETcurve = bool(toBool(settings.value("ETBflag",aw.qmc.backgroundETcurve)))
                 aw.qmc.backgroundBTcurve = bool(toBool(settings.value("BTBflag",aw.qmc.backgroundBTcurve)))
+            if settings.contains("backgroundShowFullflag"):
+                aw.qmc.backgroundShowFullflag = bool(toBool(settings.value("backgroundShowFullflag",aw.qmc.backgroundShowFullflag)))
             settings.endGroup()
             if settings.contains("compareAlignEvent"):
                 aw.qmc.compareAlignEvent = toInt(settings.value("compareAlignEvent",aw.qmc.compareAlignEvent))
@@ -29387,6 +29414,7 @@ class ApplicationWindow(QMainWindow):
             settings.setValue("alignEvent",aw.qmc.alignEvent)
             settings.setValue("ETBflag",aw.qmc.backgroundETcurve)
             settings.setValue("BTBflag",aw.qmc.backgroundBTcurve)
+            settings.setValue("backgroundShowFullflag",aw.qmc.backgroundShowFullflag)
             settings.endGroup()
             settings.setValue("compareAlignEvent",self.qmc.compareAlignEvent)
             settings.setValue("compareEvents",self.qmc.compareEvents)
