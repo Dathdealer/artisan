@@ -172,7 +172,7 @@ for:
     - export UPLOADTOOL_ISPRERELEASE=true
     - bash upload.sh artisan-*.deb
     - bash upload.sh artisan-*.rpm
-    - bash upload.sh artisan-*.pacman
+    - bash upload.sh artisan-*.appImage
 
 -
   matrix:
