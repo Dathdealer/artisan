@@ -43,6 +43,14 @@ rm -rf usr/share/man/man1/._*
 rm -rf usr/share/pixmaps/._*
 rm -rf usr/share/applications/._*
 
+
+echo Create AppImage
+pwd
+wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+chmod +x ./appimagetool-*.AppImage
+./appimagetool-x86_64.AppImage /usr/bin/artisan
+
+
 fpm -s dir -t rpm -n artisan --license GPL3 -m "Marko Luther <marko.luther@gmx.net>"  -p .. \
 --vendor "Artisan GitHub" \
 --url "https://github.com/artisan-roaster-scope/artisan" \
@@ -69,10 +77,7 @@ flavor." \
 --after-install DEBIAN/postinst \
 --before-remove DEBIAN/prerm \
 -v ${VERSION} --prefix / usr etc
-# Create AppImage
-wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-chmod +x ./appimagetool-*.AppImage
-./appimagetool-x86_64.AppImage debian/usr/bin/artisan
+
 
 cd ..
 
@@ -80,5 +85,5 @@ mv *.rpm ${NAME}.rpm
 mv *.deb ${NAME}.deb
 mv artisan.AppImage ${NAME}.AppImage
 
-ls 
+ls
 ls -lh *.deb *.rpm
