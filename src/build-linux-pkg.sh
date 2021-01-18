@@ -48,7 +48,7 @@ echo Create AppImage
 pwd
 wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 chmod +x ./appimagetool-*.AppImage
-./appimagetool-x86_64.AppImage /usr/bin/artisan
+./appimagetool-x86_64.AppImage /home/appveyor/projects/artisan/src/debian
 
 
 fpm -s dir -t rpm -n artisan --license GPL3 -m "Marko Luther <marko.luther@gmx.net>"  -p .. \
