@@ -70,7 +70,24 @@ flavor." \
 --before-remove DEBIAN/prerm \
 -v ${VERSION} --prefix / usr etc
 
+
+fpm -s dir -t pacman -n artisan --license GPL3 -m "Marko Luther <marko.luther@gmx.net>"  -p .. \
+--vendor "Artisan GitHub" \
+--url "https://github.com/artisan-roaster-scope/artisan" \
+--description "This program or software helps coffee roasters record, analyze, and control
+roast profiles. With the help of a thermocouple data logger, or a
+proportional–integral–derivative controller (PID controller), this software
+offers roasting metrics to help make decisions that influence the final coffee
+flavor." \
+--after-install DEBIAN/postinst \
+--before-remove DEBIAN/prerm \
+-v ${VERSION} --prefix / usr etc
+
+
 cd ..
+
 mv *.rpm ${NAME}.rpm
 mv *.deb ${NAME}.deb
+mv *.pacman ${NAME}.pacman
+ls -lh *${NAME}*
 ls -lh *.deb *.rpm
