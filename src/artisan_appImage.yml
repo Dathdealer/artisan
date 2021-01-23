@@ -5,7 +5,6 @@ ingredients:
   sources:
     - deb http://archive.ubuntu.com/ubuntu/ trusty main universe
   script:
-    - file=$(ls artisan-*.deb)
-    - path="file:///$(pwd)/artisan-*.deb"
+    - path="file:///$(pwd)/$(ls artisan-*.deb)"
     - curl -O -C - $path
 script:
