@@ -5,7 +5,11 @@ ingredients:
   sources:
     - deb http://archive.ubuntu.com/ubuntu/ trusty main universe
   script:
-
-    - path="file:///$(cd ..; pwd)/$(cd .. ; ls artisan-*.deb)"
+    - folder="$(cd ..; pwd)"
+    - echo  $folder
+    - echo "$(cd $folder; ls)
+    - file="$(cd $folder; ls artisan-*.deb)"
+    - echo  $file
+    - path="file:///$folder/$file"
     - curl -O -C - $path
 script:
