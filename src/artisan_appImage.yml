@@ -5,11 +5,11 @@ ingredients:
   sources:
     - deb http://archive.ubuntu.com/ubuntu/ trusty main universe
   script:
-    - folder="$(cd ..; pwd)"
-    - echo  $folder
-    - echo "$(cd $folder; ls)"
-    - file="$(cd $folder; ls artisan-*.deb)"
+    - cd "/home/appveyor/projects/artisan/src"
+    - file="$(ls artisan-*.deb)"
     - echo  $file
-    - path="file:///$folder/$file"
+    - path="file:///home/appveyor/projects/artisan/src/$file"
     - curl -O -C - $path
 script:
+  - rm -rf "./usr/bin"
+  - mv "./usr/share/artisan" "./usr/bin"
