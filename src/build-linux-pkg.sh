@@ -43,14 +43,6 @@ rm -rf usr/share/man/man1/._*
 rm -rf usr/share/pixmaps/._*
 rm -rf usr/share/applications/._*
 
-
-echo Create AppImage
-pwd
-wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
-chmod +x ./appimagetool-*.AppImage
-./appimagetool-x86_64.AppImage /home/appveyor/projects/artisan/src/debian
-
-
 fpm -s dir -t rpm -n artisan --license GPL3 -m "Marko Luther <marko.luther@gmx.net>"  -p .. \
 --vendor "Artisan GitHub" \
 --url "https://github.com/artisan-roaster-scope/artisan" \
@@ -83,7 +75,12 @@ cd ..
 
 mv *.rpm ${NAME}.rpm
 mv *.deb ${NAME}.deb
-mv artisan.AppImage ${NAME}.AppImage
+
+echo "Create App AppImage"
+wget -c https://github.com/$(wget -q https://github.com/AppImage/pkg2appimage/releases -O - | grep "pkg2appimage-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
+chmod +x ./pkg2appimage-*.AppImage
+./pkg2appimage-*.AppImage artisan_appImage.yml
+mv ./out/*.AppImage ${NAME}.AppImage
 
 ls
 ls -lh *.deb *.rpm

@@ -1,0 +1,10 @@
+app: Artisan
+
+ingredients:
+  dist: trusty
+  sources:
+    - deb http://archive.ubuntu.com/ubuntu/ trusty main universe
+  script:
+    - path="file:///$(pwd)/${NAME}"
+    - curl -O -C - $path
+script:
