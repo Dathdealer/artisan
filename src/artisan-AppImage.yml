@@ -5,12 +5,7 @@ ingredients:
   sources:
     - deb http://archive.ubuntu.com/ubuntu/ trusty main universe
   script:
-    - oDir=$(pwd)
-    - cd ..
-    - path="file://$(pwd)/$(ls artisan-*.deb)" # Serach for the package
-    - cd $oDir # go back to orignal folder
-    - curl -O -C - $path  # use the deb package
-
+    - cp ..\artisan-*.deb .
 script:
   - rm -rf "./usr/bin"
   - mv "./usr/share/artisan" "./usr/bin"
