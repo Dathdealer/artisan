@@ -23568,7 +23568,7 @@ class ApplicationWindow(QMainWindow):
     def ArtisanOpenFileDialog(self,msg=QApplication.translate("Message","Open",None),ext="*",ext_alt=None,path=None):
         if path is None:
             path = self.getDefaultPath()
-        f = str(QFileDialog.getOpenFileName(self,caption=msg,directory=path,filter=ext)[0])
+        f = str(QFileDialog.getOpenFileName(None,caption=msg,directory=path,filter=ext)[0])
         if ext_alt is not None and not f.endswith(ext_alt):
             return ""
         else:
