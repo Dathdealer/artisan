@@ -349,12 +349,12 @@ if sys.platform.startswith("darwin"):
             # singed app with forkserver option fails with a MemoryError
             multiprocessing.set_start_method('forkserver') # only available on Python3 on Unix, currently (Python 3.8) not supported by frozen executables generated with pyinstaller
         elif "fork" in multiprocessing.get_all_start_methods():
-            multiprocessing.set_start_method('fork') # default on Python3.7 for macOS (and on Unix also under Python3.8), but considered unsafe, 
+            multiprocessing.set_start_method('fork') # default on Python3.7 for macOS (and on Unix also under Python3.8), but considered unsafe,
             # not available on Windows, on Python3.8 we have to explicitly set this
             # https://bugs.python.org/issue33725
             # this is the only option that works (Hottop communication & WebLCDs) in signed macOS apps
 #        if "spawn" in multiprocessing.get_all_start_methods():
-#            multiprocessing.set_start_method('spawn') # default on Python3.8 for macOS (always default on Windows) 
+#            multiprocessing.set_start_method('spawn') # default on Python3.8 for macOS (always default on Windows)
 #            # this breaks on starting WebLCDs in macOS (and linux) builds with py2app, pyinstaller
 #            # https://bugs.python.org/issue32146
 #            # https://github.com/pyinstaller/pyinstaller/issues/4865
@@ -1471,7 +1471,7 @@ class tgraphcanvas(FigureCanvas):
 #        self.l_backgroundeventtype1dots, = self.ax.plot(self.E1backgroundtimex, self.E1backgroundvalues, color="grey")
 #        self.l_backgroundeventtype2dots, = self.ax.plot(self.E2backgroundtimex, self.E2backgroundvalues, color="darkgrey")
 #        self.l_backgroundeventtype3dots, = self.ax.plot(self.E3backgroundtimex, self.E3backgroundvalues, color="slategrey")
-#        self.l_backgroundeventtype4dots, = self.ax.plot(self.E4backgroundtimex, self.E4backgroundvalues, color="slateblue")       
+#        self.l_backgroundeventtype4dots, = self.ax.plot(self.E4backgroundtimex, self.E4backgroundvalues, color="slateblue")
         self.l_backgroundeventtype1dots = None
         self.l_backgroundeventtype2dots = None
         self.l_backgroundeventtype3dots = None
@@ -1799,7 +1799,7 @@ class tgraphcanvas(FigureCanvas):
         self.alarmstrings = []      # text descriptions, action to take, or filepath to call another program (comments after # are ignored)
         self.alarmtablecolumnwidths = []
         self.silent_alarms = False # if this is true (can be set via a Artisan Command button action "alarm(1)", alarms are triggered, but actions are not fired
-        
+
         # alarm sets
         self.alarmsets_count = 10 # number of alarm sets
         self.alarmsets = []
@@ -1845,7 +1845,7 @@ class tgraphcanvas(FigureCanvas):
         self.endofx_default = 600 # 10min*60
 
         self.xgrid_default = 120
-        
+
         self.ylimit_F_default = 500
         self.ylimit_min_F_default = 100
         self.ygrid_F_default = 100
@@ -1984,7 +1984,7 @@ class tgraphcanvas(FigureCanvas):
         self.l_eventtype2dots = None
         self.l_eventtype3dots = None
         self.l_eventtype4dots = None
-        
+
         self.l_eteventannos = []
         self.l_bteventannos = []
         self.l_eventtype1annos = []
@@ -2250,7 +2250,7 @@ class tgraphcanvas(FigureCanvas):
         self.segmentsamplesthreshold = 3
 
         self.stats_summary_rect = None
-        
+
         # temp vars used to truncate title and statistic line (x_label) to width of MPL canvas
         self.title_text = None
         self.title_artist = None
@@ -2259,7 +2259,7 @@ class tgraphcanvas(FigureCanvas):
         self.xlabel_text = None
         self.xlabel_artist = None
         self.xlabel_width = None
-    
+
         self.lazyredraw_on_resize_timer =  QTimer()
         self.lazyredraw_on_resize_timer.timeout.connect(self.lazyredraw_on_resize)
         self.lazyredraw_on_resize_timer.setSingleShot(True)
@@ -2310,7 +2310,7 @@ class tgraphcanvas(FigureCanvas):
         except:
             pass
         self.safesaveflag = False
-    
+
     def lazyredraw_on_resize(self):
         self.lazyredraw(recomputeAllDeltas=False)
 
@@ -2548,7 +2548,7 @@ class tgraphcanvas(FigureCanvas):
             return -1
         else:
             return self.eventsExternal2InternalValue(float(st))
-    
+
     def fit_titles(self):
         #truncate title and statistic line to width of axis system to avoid that the MPL canvas goes into miser mode
         try:
@@ -2579,7 +2579,7 @@ class tgraphcanvas(FigureCanvas):
                     if prev_xlabel_text != self.xlabel_artist.get_text():
                         redraw = True
                 except:
-                    pass 
+                    pass
             try:
                 if redraw:
                     # Temporarily disconnect any callbacks to the draw event...
@@ -2597,7 +2597,7 @@ class tgraphcanvas(FigureCanvas):
 
         except:
             pass
-    
+
     # hook up to mpls event handling framework for draw events
     # this is emitted after the canvas has finished a full redraw
     def _draw_event(self, _):
@@ -2711,7 +2711,7 @@ class tgraphcanvas(FigureCanvas):
                                     a.set_visible(not a.get_visible())
                         except:
                             pass
-                            
+
 
             # show event information by clicking on event lines in step, step+ and combo modes
             elif isinstance(event.artist, matplotlib.lines.Line2D):
@@ -3014,7 +3014,7 @@ class tgraphcanvas(FigureCanvas):
                 aw.largeLCDs_dialog.setTimerLCDcolor(fc,bc)
         except:
             pass
-    
+
     @pyqtSlot(str,int)
     def showAlarmPopup(self,message,timeout):
         # alarm popup message with <aw.qmc.alarm_popup_timout>sec timeout
@@ -3540,7 +3540,7 @@ class tgraphcanvas(FigureCanvas):
             self.updateWebLCDs(time=timestr)
         if aw.largeLCDs_dialog:
             self.updateLargeLCDsTimeSignal.emit(timestr)
-    
+
     def updateLCDtime(self):
         if self.flagstart and self.flagon:
             tx = self.timeclock.elapsed()/1000.
@@ -3724,7 +3724,7 @@ class tgraphcanvas(FigureCanvas):
                 self.deltalinecount = self.lendeltaaxlines()
             if self.delta_ax:
                 self.delta_ax.lines = []
-    
+
     @pyqtSlot(int)
     def getAlarmSet(self,n):
         try:
@@ -3767,7 +3767,7 @@ class tgraphcanvas(FigureCanvas):
             finally:
                 if self.alarmSemaphore.available() < 1:
                     self.alarmSemaphore.release(1)
-    
+
     def findAlarmSet(self,label):
         try:
             self.alarmSemaphore.acquire(1)
@@ -3778,10 +3778,10 @@ class tgraphcanvas(FigureCanvas):
         finally:
             if self.alarmSemaphore.available() < 1:
                 self.alarmSemaphore.release(1)
-    
+
     def makeAlarmSet(self,label,flag,guard,negguard,time,offset,source,cond,temperature,action,beep,alarmstrings):
         return [label,flag,guard,negguard,time,offset,source,cond,temperature,action,beep,alarmstrings]
-    
+
     # number is alarmnumber+1 (the 1-based alarm number the user sees), for alarms triggered from outside the alarmtable (like PID RS alarms) number is 0
     @pyqtSlot(int,bool,int,str)
     def processAlarm(self,number,beep,action,string):
@@ -3865,7 +3865,7 @@ class tgraphcanvas(FigureCanvas):
                         _, _, exc_tb = sys.exc_info()
                         aw.qmc.adderror((QApplication.translate("Error Message","Exception:",None) + " setalarm() {0}").format(str(e)),exc_tb.tb_lineno)
                         aw.sendmessage(QApplication.translate("Message","Alarm trigger slider error, description '{0}' not a valid number [0-100]",None).format(string))
-    
+
                 elif action == 7:
                     # START
                     if aw.button_2.isEnabled():
@@ -3979,7 +3979,7 @@ class tgraphcanvas(FigureCanvas):
         self.alarmstate[alarmnumber] = max(0,len(self.timex) - 1) # we have to ensure that alarmstate of triggered alarms is never negativ
 
         aw.sendmessage(QApplication.translate("Message","Alarm {0} triggered", None).format(alarmnumber + 1))
-        
+
         self.processAlarm(
             alarmnumber+1,
             len(self.alarmbeep) > alarmnumber and self.alarmbeep[alarmnumber], # beep?
@@ -4885,7 +4885,7 @@ class tgraphcanvas(FigureCanvas):
             endofx = self.endofx
         else:
             endofx = max_time
-            
+
         if bool(aw.comparator):
             starttime = 0
         else:
@@ -4895,7 +4895,7 @@ class tgraphcanvas(FigureCanvas):
                 starttime = 0
 
         endtime = endofx + starttime
-        
+
         self.ax.set_xlim(startofx,endtime)
 
         if not self.xgrid:
@@ -5240,7 +5240,7 @@ class tgraphcanvas(FigureCanvas):
                 self.AUCvalue = 0
                 self.AUCsinceFCs = 0
                 self.AUCguideTime = 0
-                
+
                 self.profile_sampling_interval = None
 
                 self.statisticstimes = [0,0,0,0,0]
@@ -5405,7 +5405,7 @@ class tgraphcanvas(FigureCanvas):
             aw.updatePhasesLCDs()
             #clear AUC LCD
             aw.updateAUCLCD()
-                
+
             aw.autoAdjustAxis()
             ### REDRAW  ##
             if redraw:
@@ -5863,7 +5863,7 @@ class tgraphcanvas(FigureCanvas):
                 return deltas
         except:
             return deltas
-    
+
     # computes the RoR over the time and temperature arrays tx and temp via polynoms of degree 1 at index i using a window of wsize
     # the window size wsize needs to be at least 2 (two succeeding readings)
     def polyRoR(self,tx,temp,wsize,i):
@@ -5877,7 +5877,7 @@ class tgraphcanvas(FigureCanvas):
                 return LS_fit[1]*60.
         else:
             return 0
-    
+
     def arrayRoR(self,tx,temp,wsize):
         res = (temp[wsize:] - temp[:-wsize]) / ((tx[wsize:] - tx[:-wsize])/60.)
         # length compensation done downstream, no necessary here!
@@ -5914,7 +5914,7 @@ class tgraphcanvas(FigureCanvas):
             if t1 is not None:
                 with numpy.errstate(divide='ignore'):
                     nt1 = numpy.array([0 if x is None else x for x in t1]) # ERROR None Type object not scriptable! t==None on ON
-                    
+
                     if optimalSmoothing and self.polyfitRoRcalc:
                         # optimal RoR computation using polynoms with out timeshift
                         if dsET % 2 == 0:
@@ -6038,7 +6038,7 @@ class tgraphcanvas(FigureCanvas):
                             z2 = self.arrayRoR(tx_roast,nt2,dsBT)
 
                 ld2 = len(z2)
-                
+
                 # make lists equal in length
                 if lt > ld2:
                     z2 = numpy.append([z2[0] if ld2 else 0.]*(lt - ld2),z2)
@@ -6180,7 +6180,7 @@ class tgraphcanvas(FigureCanvas):
             self.xlabel_artist.set_in_layout(False) # remove x-axis labels from tight_layout calculation
         except: # set_in_layout not available in mpl<3.x
             pass
-    
+
     def setProfileBackgroundTitle(self,backgroundtitle):
         suptitleX = 1
         try:
@@ -6211,7 +6211,7 @@ class tgraphcanvas(FigureCanvas):
                 self.background_title_width = 0
         except:
             self.background_title_width = 0
-    
+
     # if updatebackground is True, the samplingsemaphore is catched and updatebackground() is called
     @pyqtSlot(str,bool)
     def setProfileTitle(self,title,updatebackground=False):
@@ -6223,13 +6223,13 @@ class tgraphcanvas(FigureCanvas):
             bnr = self.roastbatchnr
         if bnr != 0 and title != "":
             title = "{}{} {}".format(bprefix,str(bnr),title)
-            
+
         if aw.qmc.graphfont == 1: # if selected font is Humor we translate the unicode title into pure ascii
             title = toASCII(title)
-        
+
         fontprop_xlarge = aw.mpl_fontproperties.copy()
         fontprop_xlarge.set_size("xx-large")
-        
+
         self.title_text = aw.arabicReshape(title.strip())
         self.title_artist = self.ax.set_title(self.title_text, color=self.palette["title"], loc='left',
                     fontproperties=fontprop_xlarge,horizontalalignment="left",verticalalignment="top",x=0)
@@ -6241,7 +6241,7 @@ class tgraphcanvas(FigureCanvas):
             self.title_width = self.title_artist.get_window_extent(renderer=self.fig.canvas.get_renderer()).width
         except:
             pass
-        
+
         if updatebackground:
             #### lock shared resources #####
             aw.qmc.samplingsemaphore.acquire(1)
@@ -6339,7 +6339,7 @@ class tgraphcanvas(FigureCanvas):
                     self.delta_ax = self.ax.twinx()
 
                 # instead to remove and regenerate the axis object (we just clear and reuse it)
-                
+
                 with warnings.catch_warnings():
                     warnings.simplefilter('ignore')
                     self.ax.clear()
@@ -6493,7 +6493,7 @@ class tgraphcanvas(FigureCanvas):
                 self.ax.spines['bottom'].set_color("0.40")
                 self.ax.spines['left'].set_color("0.40")
                 self.ax.spines['right'].set_color("0.40")
-                        
+
                 self.l_eventtype1dots = None
                 self.l_eventtype2dots = None
                 self.l_eventtype3dots = None
@@ -7953,7 +7953,7 @@ class tgraphcanvas(FigureCanvas):
                 self.legendloc_pos = None
                 if takelock and aw.qmc.samplingsemaphore.available() < 1:
                     aw.qmc.samplingsemaphore.release(1)
-                
+
                 # to allow the fit_title to work on the proper value we ping the redraw explicitly again after processing events
                 # we need to use draw_idle here to allow Qt for relayout event processing
                 # calling QApplication.processEvents() is not an option here as the event loop might not have been started yet
@@ -8909,7 +8909,7 @@ class tgraphcanvas(FigureCanvas):
                 self.ax1.yaxis.set_major_locator(ticker.FixedLocator(ticks_loc))
             except:
                 pass
-            
+
             self.ax1.set_aspect(self.flavoraspect)
 
             aw.setFonts(redraw=False)
@@ -9360,7 +9360,7 @@ class tgraphcanvas(FigureCanvas):
                         pass
             #appnope.nap()
             aw.eventactionx(aw.qmc.extrabuttonactions[1],aw.qmc.extrabuttonactionstrings[1])
-            
+
             # update error dlg
             if aw.error_dlg:
                 aw.error_dlg.update()
@@ -9370,7 +9370,7 @@ class tgraphcanvas(FigureCanvas):
                     aw.serial_dlg.update()
                 except Exception:
                     pass
-                                        
+
             if recording and self.flagKeepON:
                 self.OnMonitor()
         except Exception as ex:
@@ -9596,7 +9596,7 @@ class tgraphcanvas(FigureCanvas):
     @pyqtSlot()
     def toggleMonitorTigger(self):
         self.ToggleMonitor()
-    
+
     #Turns ON/OFF flag self.flagon to read and print values. Called from push button_1.
     @pyqtSlot(bool)
     def ToggleMonitor(self,_=False):
@@ -9627,7 +9627,7 @@ class tgraphcanvas(FigureCanvas):
             aw.qmc.ax.set_ylabel("")
             if not aw.qmc.title_show_always:
                 aw.qmc.setProfileTitle("")
-            
+
             # reset LCD timer color that might have been reset by the RS PID in monitoring mode:
             aw.lcd1.setStyleSheet("QLCDNumber { border-radius: 4; color: %s; background-color: %s;}"%(aw.lcdpaletteF["timer"],aw.lcdpaletteB["timer"]))
             aw.qmc.setTimerLargeLCDcolorSignal.emit(aw.lcdpaletteF["timer"],aw.lcdpaletteB["timer"])
@@ -9776,10 +9776,10 @@ class tgraphcanvas(FigureCanvas):
             self.markCharge()
         else:
             QTimer.singleShot(delay,self.markChargeTrigger)
-        
+
     def markChargeTrigger(self):
         self.markCharge()
-    
+
     #Records charge (put beans in) marker. called from push button 'Charge'
     @pyqtSlot(bool)
     def markCharge(self,_=False):
@@ -9929,7 +9929,7 @@ class tgraphcanvas(FigureCanvas):
     @pyqtSlot()
     def markDRYTrigger(self):
         self.markDryEnd()
-        
+
     @pyqtSlot(bool)
     def markDryEnd(self,_=False):
         if len(self.timex) > 1:
@@ -9940,7 +9940,7 @@ class tgraphcanvas(FigureCanvas):
                     aw.soundpopSignal.emit()
                     #prevents accidentally deleting a modified profile.
                     self.fileDirtySignal.emit()
-    
+
                     if self.timeindex[0] > -1:
                         start = self.timex[self.timeindex[0]]
                     else:
@@ -9987,7 +9987,7 @@ class tgraphcanvas(FigureCanvas):
                         #self.fig.canvas.draw() # not needed as self.annotate does the (partial) redraw
                         self.updateBackground() # but we need
                         aw.qmc.phasesLCDmode = aw.qmc.phasesLCDmode_l[1]
-    
+
                 else:
                     message = QApplication.translate("Message","DRY END: Scope is not recording", None)
                     aw.sendmessage(message)
@@ -10035,7 +10035,7 @@ class tgraphcanvas(FigureCanvas):
     @pyqtSlot()
     def markFCsTrigger(self):
         self.mark1Cstart()
-        
+
     #record 1C start markers of BT. called from push button_3 of application window
     @pyqtSlot(bool)
     def mark1Cstart(self,_=False):
@@ -10047,7 +10047,7 @@ class tgraphcanvas(FigureCanvas):
                     aw.soundpopSignal.emit()
                     #prevents accidentally deleting a modified profile.
                     self.fileDirtySignal.emit()
-    
+
                     if self.timeindex[0] > -1:
                         start = self.timex[self.timeindex[0]]
                     else:
@@ -10141,7 +10141,7 @@ class tgraphcanvas(FigureCanvas):
     @pyqtSlot()
     def markFCeTrigger(self):
         self.mark1Cend()
-    
+
     #record 1C end markers of BT. called from button_4 of application window
     @pyqtSlot(bool)
     def mark1Cend(self,_=False):
@@ -10153,7 +10153,7 @@ class tgraphcanvas(FigureCanvas):
                     aw.soundpopSignal.emit()
                     #prevents accidentally deleting a modified profile.
                     self.fileDirtySignal.emit()
-    
+
                     if self.timeindex[0] > -1:
                         start = self.timex[self.timeindex[0]]
                     else:
@@ -10252,7 +10252,7 @@ class tgraphcanvas(FigureCanvas):
                     aw.soundpopSignal.emit()
                     #prevents accidentally deleting a modified profile.
                     self.fileDirtySignal.emit()
-    
+
                     if self.timeindex[0] > -1:
                         start = self.timex[self.timeindex[0]]
                     else:
@@ -10361,7 +10361,7 @@ class tgraphcanvas(FigureCanvas):
                     aw.soundpopSignal.emit()
                     #prevents accidentally deleting a modified profile.
                     self.fileDirtySignal.emit()
-    
+
                     if self.timeindex[0] > -1:
                         start = self.timex[self.timeindex[0]]
                     else:
@@ -10464,7 +10464,7 @@ class tgraphcanvas(FigureCanvas):
                     aw.soundpopSignal.emit()
                     #prevents accidentally deleting a modified profile.
                     self.fileDirtySignal.emit()
-    
+
                     if self.timeindex[0] > -1:
                         start = self.timex[self.timeindex[0]]
                     else:
@@ -10524,7 +10524,7 @@ class tgraphcanvas(FigureCanvas):
                         self.l_annotations += self.annotate(self.temp2[self.timeindex[6]],st1,self.timex[self.timeindex[6]],self.temp2[self.timeindex[6]],self.ystep_up,self.ystep_down,draggable_anno_key=6)
                         #self.fig.canvas.draw() # not needed as self.annotate does the (partial) redraw
                         self.updateBackground() # but we need
-    
+
                         try:
                             # update ambient temperature if a ambient temperature source is configured and no value yet established
                             aw.qmc.updateAmbientTempFromPhidgetModulesOrCurve()
@@ -10583,7 +10583,7 @@ class tgraphcanvas(FigureCanvas):
                         aw.button_4.setFlat(True)
                         aw.button_5.setFlat(True)
                         aw.button_6.setFlat(True)
-    
+
                         try:
                             aw.eventactionx(aw.qmc.buttonactions[6],aw.qmc.buttonactionstrings[6])
                             if self.timeindex[0] > -1:
@@ -10617,7 +10617,7 @@ class tgraphcanvas(FigureCanvas):
     @pyqtSlot()
     def markCoolTrigger(self):
         self.markCoolEnd()
-    
+
     @pyqtSlot(bool)
     def markCoolEnd(self,_=False):
         if len(self.timex) > 1:
@@ -10628,16 +10628,16 @@ class tgraphcanvas(FigureCanvas):
                     aw.soundpopSignal.emit()
                     #prevents accidentally deleting a modified profile.
                     self.fileDirtySignal.emit()
-    
+
                     if self.timeindex[0] > -1:
                         start = self.timex[self.timeindex[0]]
                     else:
                         start = 0
                     if aw.button_20.isFlat() and self.timeindex[7] > 0:
                         # undo wrongly set COOL
-    
+
                         st1 = aw.arabicReshape(QApplication.translate("Scope Annotation","CE {0}", None).format(stringfromseconds(self.timex[self.timeindex[7]] - start)))
-    
+
                         if len(self.l_annotations) > 1 and self.l_annotations[-1].get_text() == st1:
                             try:
                                 self.l_annotations[-1].remove()
@@ -10652,7 +10652,7 @@ class tgraphcanvas(FigureCanvas):
                                 del self.l_annotations_dict[7]
                             self.timeindex[7] = 0
                             removed = True
-    
+
                     elif not aw.button_20.isFlat():
                         if self.device != 18 or aw.simulator is not None:
                             self.timeindex[7] = max(0,len(self.timex)-1)
@@ -13016,14 +13016,14 @@ class tgraphcanvas(FigureCanvas):
                 except:
                     pass
             self.ax2 = self.fig.add_subplot(111, projection='polar',facecolor='None')
-            
+
             # fixing yticks with matplotlib.ticker "FixedLocator"
             try:
                 ticks_loc = self.ax2.get_yticks()
                 self.ax2.yaxis.set_major_locator(ticker.FixedLocator(ticks_loc))
             except:
                 pass
-            
+
             self.ax2.set_rmax(1.)
             self.ax2.set_aspect(self.wheelaspect)
             self.ax2.grid(False)
@@ -13467,7 +13467,7 @@ class VMToolbar(NavigationToolbar):
                 color.setAlpha(tmp.pixelColor(x,y).alpha())
                 tmp.setPixelColor(x,y,color)
         return QPixmap.fromImage(tmp)
-        
+
     # overwritten from MPL v3.2.2 to get rid of that extra data printed
     def mouse_move(self, event):
         try:
@@ -13566,7 +13566,7 @@ class VMToolbar(NavigationToolbar):
                             if line.get_drawstyle() == "steps-post":
                                 steps_post_lines.append(line)
                                 line.set_drawstyle("steps")
-                    
+
                     with warnings.catch_warnings():
                         warnings.filterwarnings("ignore") # , category=numpy.VisibleDeprecationWarning)
                         figureoptions.figure_edit(axes)
@@ -13838,11 +13838,11 @@ class SampleThread(QThread):
                                         aw.qmc.RTextratemp2[i] = extrat2
                                     except:
                                         pass
-                                        
+
                                 et1_prev = et2_prev = None
                                 et1_prevprev = et2_prevprev = None
                                 if aw.qmc.extradevices[i] != 25: # don't apply input filters to virtual devices
-                                
+
                                     ## Apply InputFilters. As those might modify destructively up to two older readings in temp1/2 via interpolation for drop outs we try to dectect this and copy those
                                     # changes back to the ctemp lines that are rendered.
                                     if (aw.qmc.minmaxLimits or aw.qmc.dropSpikes or aw.qmc.dropDuplicates):
@@ -13873,7 +13873,7 @@ class SampleThread(QThread):
                                 sample_extratimex[i].append(extratx)
                                 sample_extratemp1[i].append(float(extrat1))
                                 sample_extratemp2[i].append(float(extrat2))
-                                
+
                                 if extrat1 != -1:
                                     sample_extractimex1[i].append(float(extratx))
                                     sample_extractemp1[i].append(float(extrat1))
@@ -13959,7 +13959,7 @@ class SampleThread(QThread):
                             pass
                     # if modbus device do the C/F conversion if needed (done after mathexpression, not to mess up with x/10 formulas)
                     # modbus channel 1+2, respect input temperature scale setting
-                    
+
                     ## Apply InputFilters. As those might modify destructively up to two older readings in temp1/2 via interpolation for drop outs we try to dectect this and copy those
                     # changes back to the ctemp lines that are rendered.
                     t1_prev = t2_prev = None
@@ -13975,8 +13975,8 @@ class SampleThread(QThread):
                                 t2_prevprev = sample_temp2[-2]
                     t1 = self.inputFilter(sample_timex,sample_temp1,tx,t1)
                     t2 = self.inputFilter(sample_timex,sample_temp2,tx,t2,True)
-                    
-                    # now copy the destructively modified values from temp1/2 to ctemp1/2 if any (to ensure to pick the right elements we compare the timestamps at those indicees)                    
+
+                    # now copy the destructively modified values from temp1/2 to ctemp1/2 if any (to ensure to pick the right elements we compare the timestamps at those indicees)
                     if (aw.qmc.minmaxLimits or aw.qmc.dropSpikes or aw.qmc.dropDuplicates):
                         if len(sample_ctimex1)>0:
                             if t1_prev is not None and sample_ctimex1[-1] == sample_timex[-1] and t1_prev != sample_temp1[-1]:
@@ -14108,7 +14108,7 @@ class SampleThread(QThread):
                             else:
                                 timed = sample_ctimex1[-1] - sample_ctimex1[-left_index]   #time difference between last aw.qmc.deltaETsamples readings
                                 aw.qmc.rateofchange1 = ((sample_tstemp1[-1] - sample_tstemp1[-left_index])/timed)*60.  #delta ET (degress/minute)
-                            
+
                             if aw.qmc.DeltaETfunction is not None and len(aw.qmc.DeltaETfunction):
                                 try:
                                     aw.qmc.rateofchange1 = aw.qmc.eval_math_expression(aw.qmc.DeltaETfunction,tx,RTsname="R1",RTsval=aw.qmc.rateofchange1)
@@ -14626,7 +14626,7 @@ class ApplicationWindow(QMainWindow):
 
         super(ApplicationWindow, self).__init__(parent)
         self.helpdialog = None
-        
+
         self.setAcceptDrops(True) # enable drag-and-drop
 
         # a timer that is triggered by resizing the main window
@@ -17003,7 +17003,7 @@ class ApplicationWindow(QMainWindow):
         self.level1frame.setLayout(self.level1layout)
 
         level3layout = QHBoxLayout()   # PID buttons, graph, temperature LCDs
-        
+
         pidbuttonLayout = QVBoxLayout()
 
         EventsLayout = QHBoxLayout()
@@ -17222,7 +17222,7 @@ class ApplicationWindow(QMainWindow):
         midleftlayout.addLayout(level3layout)
         midleftlayout.addWidget(self.lowerbuttondialog)
         midleftlayout.addWidget(self.extrabuttondialogs)
-        
+
         midleftlayout.addWidget(self.EventsGroupLayout)
 
         self.slider1 = self.slider()
@@ -17460,7 +17460,7 @@ class ApplicationWindow(QMainWindow):
             aw.qmc.redraw()
         except Exception:
             pass
-    
+
     @pyqtSlot()
     def resetCanvasColor(self):
         try:
@@ -17476,7 +17476,7 @@ class ApplicationWindow(QMainWindow):
     # takes an "Arduino" float time in seconds and returns the corresponding QTime() object
     def time2QTime(self,t):
         return QTime(0,t/60,t%60)
-        
+
     def QTime2time(self,t):
         return t.minute() * 60 + t.second()
 
@@ -18159,7 +18159,7 @@ class ApplicationWindow(QMainWindow):
                             menu_title = tr(e[0]) # + "..."
                         else:
                             menu_title = str(k) + " " + str(e[0])  # + "..."
-                        menu_title = menu_title.replace('&','&&') # a & in a menu entry is not displayed, but "&&" is displayed as "&"                            
+                        menu_title = menu_title.replace('&','&&') # a & in a menu entry is not displayed, but "&&" is displayed as "&"
                         a.setText(menu_title)
                         menu.addAction(a)
                     one_added = True
@@ -18640,7 +18640,7 @@ class ApplicationWindow(QMainWindow):
         if current_background_color is None or current_background_color != str(canvas_color) or (whitep and aw.qmc.palette["messages"] != 'white'): # canvas color did not change, we do not need to redo the navigation bar
             # update navigationbar
             aw.level1layout.removeWidget(aw.ntb) # remove current bar
-            
+
             if mpl_version[0] > 2 and mpl_version[1] > 2:
                 if aw.ntb.mode == MPL_Mode.PAN:
                     aw.ntb.pan() # PAN is active, we deactivate it before changing the ToolBar
@@ -18812,7 +18812,7 @@ class ApplicationWindow(QMainWindow):
                 # adjust zgrid
                 d = aw.qmc.zlimit - aw.qmc.zlimit_min
                 steps = int(round(d/5))
-                if steps > 50: 
+                if steps > 50:
                     steps = int(round(steps/10))*10
                 elif steps > 10:
                     steps = int(round(steps/5))*5
@@ -19074,7 +19074,7 @@ class ApplicationWindow(QMainWindow):
 #            aw.sendmessage(QApplication.translate("Message","super on",None))
 #        else:
 #            aw.sendmessage(QApplication.translate("Message","super off",None))
-            
+
     @pyqtSlot()
     def superusermodeLeftClicked(self):
         self.superusermode = not self.superusermode
@@ -19727,7 +19727,7 @@ class ApplicationWindow(QMainWindow):
             rcParams['font.size'] = 12.0
             rcParams['font.family'] = ['SourceHanSansJP-Regular']
             aw.set_mpl_fontproperties(self.getResourcePath() + "SourceHanSansJP-Regular.otf")
-        elif self.qmc.graphfont == 9: 
+        elif self.qmc.graphfont == 9:
             # font Dijkstra selected
             rcParams['font.size'] = 10.0
             rcParams['font.family'] = ['Dijkstra']
@@ -20427,7 +20427,7 @@ class ApplicationWindow(QMainWindow):
         # f(x) = k*x + o
         value = (self.eventsliderfactors[n] * slider_value) + self.eventslideroffsets[n]
         return value
-        
+
     def recordsliderevent(self,n):
         aw.block_quantification_sampling_ticks[n] = aw.sampling_ticks_to_block_quantifiction
         self.extraeventsactionslastvalue[n] = self.eventslidervalues[n]
@@ -21339,7 +21339,7 @@ class ApplicationWindow(QMainWindow):
                                     aw.s7.lastReadResult = aw.s7.readBool(5,int(dbnr),int(s),int(i),force=True)
                                 except Exception:
                                     pass
-                                    
+
                             elif cs.startswith("button"):
                                 # cmd has format "button(<bool>)" # 0 or 1 or True or False
                                 try:
@@ -22695,7 +22695,7 @@ class ApplicationWindow(QMainWindow):
                 self.processingKeyEvent = True
                 key = int(event.key())
                 modifiers = event.modifiers()
-                #Note: Windows only - PyQt will sometimes, but not always, interpret a shortcut key as a menu key.  For that 
+                #Note: Windows only - PyQt will sometimes, but not always, interpret a shortcut key as a menu key.  For that
                 #    reason only CTRL and CTRL+SHIFT modifier should be used with shortcut keys f,e,r,c,t,v, and h.
                 control_modifier = modifiers == Qt.ControlModifier # command/apple key on macOS
                 alt_modifier = modifiers == Qt.AltModifier # OPTINO on macOS, ALT on Windows
@@ -23217,7 +23217,7 @@ class ApplicationWindow(QMainWindow):
                 density_loss = str(aw.float2float(100 *(cp["green_density"] - cp["roasted_density"]) / cp["green_density"],1))
             else:
                 density_loss = "0.0"
-                
+
             #note: since fields are delimited only at the start, to avoid ambiguity requires the shortest field string to be last in the list.  Example, "date_time" must come before "date" in the list.
             fields = [
                 ("batch_long", self.qmc.roastbatchprefix + str(bnr) + ' (' + str(self.qmc.roastbatchpos) + ')'),
@@ -23306,7 +23306,7 @@ class ApplicationWindow(QMainWindow):
                 ("hour", self.qmc.roastdate.toString("hh")),
                 ("minute", self.qmc.roastdate.toString("mm")),
                 ]
-    
+
             _ignorecase = re.IGNORECASE  # @UndefinedVariable
             #text between single quotes ' will show only when recording or for preview recording
             fn = re.sub(r"{}([^{}]+){}".format(onDelim,onDelim,onDelim),
@@ -23556,7 +23556,7 @@ class ApplicationWindow(QMainWindow):
     def ArtisanOpenFilesDialog(self,msg=QApplication.translate("Message","Select",None),ext="*",path=None):
         if path is None:
             path = self.getDefaultPath()
-        res = QFileDialog.getOpenFileNames(self,msg,path,ext)[0]
+        res = QFileDialog.getOpenFileNames(None,msg,path,ext)[0]
         for f in res:
             self.setDefaultPath(str(f))
         return res
@@ -23593,7 +23593,7 @@ class ApplicationWindow(QMainWindow):
                 return url
             else:
                 return None
-    
+
     #the central SaveFileDialog function that should always be called. Besides triggering the file dialog it
     #reads and sets the actual directory
     def ArtisanSaveFileDialog(self,msg=QApplication.translate("Message","Save",None),ext="*.alog",path=None):
@@ -23946,7 +23946,7 @@ class ApplicationWindow(QMainWindow):
                 return False
         else:
             return False
-    
+
     @pyqtSlot()
     def clearbackgroundRedraw(self):
         self.deleteBackground()
@@ -23988,7 +23988,7 @@ class ApplicationWindow(QMainWindow):
                 t2 = profile["temp2"]
                 t1x = profile["extratemp1"]
                 t2x = profile["extratemp2"]
-                
+
                 #remove the analysis results annotation if it exists
                 aw.qmc.analysisresultsstr = ""
 
@@ -24067,7 +24067,7 @@ class ApplicationWindow(QMainWindow):
                 self.qmc.backgroundEStrings = [d(x) for x in profile["specialeventsStrings"]]
                 self.qmc.backgroundFlavors = profile["flavors"]
                 self.qmc.titleB = d(profile["title"])
-                                
+
                 if "roastbatchnr" in profile:
                     try:
                         self.qmc.roastbatchnrB = int(profile["roastbatchnr"])
@@ -24502,7 +24502,7 @@ class ApplicationWindow(QMainWindow):
                 t = self.qmc.timex[self.qmc.timeindex[7]] - self.qmc.timex[self.qmc.timeindex[6]]
                 cooling.text = "%02d:%02d"% divmod(t,60)
             else:
-                cooling.text = "00:00" 
+                cooling.text = "00:00"
 
             switchpoints = ET.SubElement(tree, "switchpoints")
             # take data from 2nd extra event type
@@ -24751,7 +24751,7 @@ class ApplicationWindow(QMainWindow):
         obj["timex"] = timex
         obj["temp1"] = temp2
         obj["temp2"] = temp1
-        
+
         if len(obj["timex"]) > 2:
             obj["samplinginterval"] = (obj["timex"][-1] - obj["timex"][0])/(len(obj["timex"] - 1))
 
@@ -25942,7 +25942,7 @@ class ApplicationWindow(QMainWindow):
                 self.qmc.moisture_roasted = profile["moisture_roasted"]
             else:
                 self.qmc.moisture_roasted = 0.
-            
+
             # only load annotations position if the temperature mode did not change
             if "anno_positions" in profile and self.qmc.mode == m:
                 self.qmc.setAnnoPositions(profile["anno_positions"])
@@ -26898,12 +26898,12 @@ class ApplicationWindow(QMainWindow):
             updateBatchCounter = True
             if filename is not None:
                 settings = QSettings(filename,QSettings.IniFormat)
-                
+
                 # a proper artisan-settings.aset file needs at least to contain a Mode tag
                 if not (theme or machine) and not settings.contains("Mode"):
                     aw.qmc.adderror(QApplication.translate("Error Message","Exception: {} not a valid settings file",None).format(str(filename)))
                     return False
-            
+
                 if aw.qmc.neverUpdateBatchCounter or app.artisanviewerMode:
                     updateBatchCounter = False
                 else:
@@ -27356,7 +27356,7 @@ class ApplicationWindow(QMainWindow):
             self.ws.drop_message = toString(settings.value("drop_message",self.ws.drop_message))
             self.ws.STARTonCHARGE = bool(toBool(settings.value("STARTonCHARGE",self.ws.STARTonCHARGE)))
             self.ws.OFFonDROP = bool(toBool(settings.value("OFFonDROP",self.ws.OFFonDROP)))
-            self.ws.addEvent_message = toString(settings.value("addEvent_message",self.ws.addEvent_message))     
+            self.ws.addEvent_message = toString(settings.value("addEvent_message",self.ws.addEvent_message))
             self.ws.event_node = toString(settings.value("event_node",self.ws.event_node))
             self.ws.DRY_node = toString(settings.value("DRY_node",self.ws.DRY_node))
             self.ws.FCs_node = toString(settings.value("FCs_node",self.ws.FCs_node))
@@ -27592,7 +27592,7 @@ class ApplicationWindow(QMainWindow):
                     self.qmc.alarmsetlabel = toString(settings.value("alarmsetlabel",self.qmc.alarmsetlabel))
                 else:
                     self.qmc.alarmsetlabel = ""
-                    
+
                 if settings.contains("alarmguard"):
                     self.qmc.alarmguard = [toInt(x) for x in toList(settings.value("alarmguard",self.qmc.alarmguard))]
                 else:
@@ -27692,7 +27692,7 @@ class ApplicationWindow(QMainWindow):
                     aw.pidcontrol.invertControl = bool(toBool(settings.value("invertControl",aw.pidcontrol.invertControl)))
                 if settings.contains("pOnE"):
                     aw.pidcontrol.pOnE = bool(toBool(settings.value("pOnE",aw.pidcontrol.pOnE)))
-                
+
                 for n in range(aw.pidcontrol.RSLen):
                     svLabelLabel = "RS_svLabel"+str(n)
                     if settings.contains(svLabelLabel):
@@ -27715,7 +27715,7 @@ class ApplicationWindow(QMainWindow):
                     svDescriptionsLabel = "RS_svDescriptions"+str(n)
                     if settings.contains(svDescriptionsLabel):
                         aw.pidcontrol.RS_svDescriptions[n] = list(toStringList(settings.value(svDescriptionsLabel,aw.pidcontrol.RS_svDescriptions[n])))
-                
+
             settings.endGroup()
 
             #restore pid settings
@@ -28019,7 +28019,7 @@ class ApplicationWindow(QMainWindow):
                     self.qmc.ETbacklinewidth = max(0.1,aw.float2float(toFloat(settings.value("ETbacklinewidth",self.qmc.ETbacklinewidth))))
                     self.qmc.ETbackmarker = s2a(toString(settings.value("ETbackmarker",self.qmc.ETbackmarker)))
                     self.qmc.ETbackmarkersize = max(0.1,aw.float2float(toFloat(settings.value("ETbackmarkersize",self.qmc.ETbackmarkersize))))
-                    
+
                     self.qmc.XTbacklinestyle = s2a(toString(settings.value("XTbacklinestyle",self.qmc.XTbacklinestyle)))
                     self.qmc.XTbackdrawstyle = s2a(toString(settings.value("XTbackdrawstyle",self.qmc.XTbackdrawstyle)))
                     if self.qmc.XTbackdrawstyle == '-':
@@ -28403,7 +28403,7 @@ class ApplicationWindow(QMainWindow):
 
             #update individual visibility of each buttons
             self.realignbuttons()
-            
+
             self.qmc.clearLCDs()
 
             self.updateSlidersVisibility() # update visibility of sliders based on the users preference
@@ -30383,7 +30383,7 @@ class ApplicationWindow(QMainWindow):
             ["operator",            "prof",  "text",     "false",  "",      QApplication.translate('HTML Report Template','Operator',None)             ],
             ["organization",        "prof",  "text",     "false",  "",      QApplication.translate('HTML Report Template','Organization',None)         ],
             ["drumspeed",           "prof",  "text2int", "true" ,  "",      QApplication.translate('HTML Report Template','Drum Speed',None)           ],
-            ["whole_color",         "prof",  "int",      "true" ,  "",      QApplication.translate('HTML Report Template','Whole Color',None)          ], 
+            ["whole_color",         "prof",  "int",      "true" ,  "",      QApplication.translate('HTML Report Template','Whole Color',None)          ],
             ["ground_color",        "prof",  "int",      "true" ,  "",      QApplication.translate('HTML Report Template','Ground Color',None)         ],
             ["color_system",        "prof",  "text",     "false",  "",      QApplication.translate('HTML Report Template','Color System',None)         ],
             ["beansize_min",        "prof",  "text2int", "true" ,  "",      QApplication.translate('HTML Report Template','Screen Min',None)           ],
@@ -30403,7 +30403,7 @@ class ApplicationWindow(QMainWindow):
             ["FCe_time",            "comp",  "time",     "false",  "",      QApplication.translate('HTML Report Template','FCe Time',None)             ],
             ["FCe_ET",              "comp",  "float1",   "false",  "temp",  QApplication.translate('HTML Report Template','FCe ET',None)               ],
             ["FCe_BT",              "comp",  "float1",   "false",  "temp",  QApplication.translate('HTML Report Template','FCe BT',None)               ],
-            ["SCs_time",            "comp",  "time",     "false",  "",      QApplication.translate('HTML Report Template','SCs Time',None)             ],  
+            ["SCs_time",            "comp",  "time",     "false",  "",      QApplication.translate('HTML Report Template','SCs Time',None)             ],
             ["SCs_ET",              "comp",  "float1",   "false",  "temp",  QApplication.translate('HTML Report Template','SCs ET',None)               ],
             ["SCs_BT",              "comp",  "float1",   "false",  "temp",  QApplication.translate('HTML Report Template','SCs BT',None)               ],
             ["SCe_time",            "comp",  "time",     "false",  "",      QApplication.translate('HTML Report Template','SCe Time',None)             ],
@@ -30484,7 +30484,7 @@ class ApplicationWindow(QMainWindow):
                         suffix = " ({0})".format(temperature_unit + "/min")
                     elif units.startswith('('):
                         suffix = " {0}".format(units)
-                    else: 
+                    else:
                         suffix = ""
                     hdr_name = "{0}{1}".format(name,suffix)
                     res.append(hdr_name)
@@ -30714,7 +30714,7 @@ class ApplicationWindow(QMainWindow):
                 first_profile_event_time = 0
                 max_drop_time = 0
                 label_chr_nr = 0
-                
+
                 delta_max = 1 # computed the delta max over all delta curves if visible
 
                 for p in profiles:
@@ -30952,14 +30952,14 @@ class ApplicationWindow(QMainWindow):
                                         except:
                                             pass
                         except:
-                            pass                            
+                            pass
                         # we only adjust the upper limit of the delta axis automatically
                         if self.qmc.autodeltaxBT:
-                            self.qmc.delta_ax.set_ylim(self.qmc.zlimit_min,delta_max)                        
+                            self.qmc.delta_ax.set_ylim(self.qmc.zlimit_min,delta_max)
                         # adjust zgrid
                         d = delta_max - self.qmc.zlimit_min
                         steps = int(round(d/5))
-                        if steps > 50: 
+                        if steps > 50:
                             steps = int(round(steps/10))*10
                         elif steps > 10:
                             steps = int(round(steps/5))*5
@@ -31312,7 +31312,7 @@ class ApplicationWindow(QMainWindow):
                             suffix = " ({0})".format(temperature_unit + "/min")
                         elif units.startswith('('):
                             suffix = " {0}".format(units)
-                        else: 
+                        else:
                             suffix = ""
                         cell = ws.cell(column=cnum, row=1, value="{0}{1}".format(name,suffix))
                         cell.font = bf
@@ -31373,7 +31373,7 @@ class ApplicationWindow(QMainWindow):
                                             if width > float(units):
                                                 width = float(units)
                                         if width > widths[i]:
-                                            widths[i] = width 
+                                            widths[i] = width
                                             ws.column_dimensions[get_column_letter(cnum)].width = width
                                         ws[cr].alignment = Alignment(wrap_text=True)
                                     elif typ == "int":
@@ -31410,7 +31410,7 @@ class ApplicationWindow(QMainWindow):
                                         ws[cr].number_format = fmt
                                         width = (len(fmt) + 2.)
                                         if width > widths[i]:
-                                            widths[i] = width 
+                                            widths[i] = width
                                             ws.column_dimensions[get_column_letter(cnum)].width = width
                                     elif typ == "bool":
                                         ws[cr] = str(conv_fld)
@@ -31929,7 +31929,7 @@ class ApplicationWindow(QMainWindow):
                 html += ("<tr>"+
                      "\n<td>" + str(i+1) + "</td><td>" +
                      stringfromseconds(self.qmc.timex[sevents[i][0]] - start) +
-                     "</td><td align='right'>" + temps + "</td><td>" + 
+                     "</td><td align='right'>" + temps + "</td><td>" +
                      "</td><td align='right'>" + deltas + "</td><td>" + seventsString[i] + ("</td></tr>\n" if seventsType[i] == 4 else ("</td><td>(" + str(self.qmc.etypesf(seventsType[i])) + " " + self.qmc.eventsvalues(seventsValue[i]) + ")</td></tr>\n")))
             html += '</table>\n</center>'
         return html
@@ -32617,19 +32617,19 @@ class ApplicationWindow(QMainWindow):
             self.ws.drop_message = str(dialog.ws_drop.text()).strip()
             self.ws.STARTonCHARGE = bool(dialog.ws_STARTonCHARGE.isChecked())
             self.ws.OFFonDROP = bool(dialog.ws_OFFonDROP.isChecked())
-            self.ws.addEvent_message = str(dialog.ws_event_message.text()).strip()       
+            self.ws.addEvent_message = str(dialog.ws_event_message.text()).strip()
             self.ws.event_node = str(dialog.ws_event.text()).strip()
             self.ws.DRY_node = str(dialog.ws_DRY.text()).strip()
             self.ws.FCs_node = str(dialog.ws_FCs.text()).strip()
             self.ws.FCe_node = str(dialog.ws_FCe.text()).strip()
             self.ws.SCs_node = str(dialog.ws_SCs.text()).strip()
             self.ws.SCe_node = str(dialog.ws_SCe.text()).strip()
-            
+
             for i in range(self.ws.channels):
                 self.ws.channel_requests[i] = str(dialog.ws_requestEdits[i].text()).strip()
                 self.ws.channel_nodes[i] = str(dialog.ws_nodeEdits[i].text()).strip()
                 self.ws.channel_modes[i] = int(dialog.ws_modeCombos[i].currentIndex())
-            
+
             # S7 Setup
             self.s7.host = str(dialog.s7_hostEdit.text())
             self.s7.port = int(str(dialog.s7_portEdit.text()))
@@ -33858,7 +33858,7 @@ class ApplicationWindow(QMainWindow):
                         burner = burner.replace(",",".")
                         self.qmc.extratemp1[0].append(float(burner))
                         self.qmc.extratemp2[0].append(-1)
-                
+
                 if len(self.qmc.timex) > 2:
                     self.qmc.profile_sampling_interval = (self.qmc.timex[-1] - self.qmc.timex[0])/(len(self.qmc.timex) - 1)
                 self.qmc.updateDeltaSamples()
@@ -33920,14 +33920,14 @@ class ApplicationWindow(QMainWindow):
 #            import traceback
 #            traceback.print_exc(file=sys.stdout)
             pass
-    
+
     def importExternalURL(self,extractor,message):
         try:
             url = self.ArtisanOpenURLDialog(msg=message)
             if url is None:
                 return
             pass
-            
+
             res = aw.qmc.reset(redraw=False,soundOn=False)
             if res:
                 obj = extractor(url,aw)
@@ -33997,12 +33997,12 @@ class ApplicationWindow(QMainWindow):
     @pyqtSlot(bool)
     def importCropster(self,_=False):
         self.importExternal(extractProfileCropsterXLS,QApplication.translate("Message","Import Cropster XLS", None),"*.xls")
-        
+
     @pyqtSlot()
     @pyqtSlot(bool)
     def importRoastLog(self,_=False):
         self.importExternalURL(extractProfileRoastLog,QApplication.translate("Message","Import RoastLog URL", None))
-        
+
     @pyqtSlot()
     @pyqtSlot(bool)
     def importRoastPATH(self,_=False):
@@ -34620,7 +34620,7 @@ class ApplicationWindow(QMainWindow):
             if self.buttonpalette[i][25] == label:
                 return i
         return None
-    
+
     #transfers current buttons to a palette number
     def transferbuttonsto(self,pindex):
         copy = []
@@ -34829,7 +34829,7 @@ class ApplicationWindow(QMainWindow):
                             for k in range(9,26):
                                 if len(pal[i]) == k+1:
                                     nextpalette[k] = pal[i][k]
-                        
+
                         if len(palette[key])>=21:
                             nextpalette[14] = list(map(int,palette[key][14]))     #  type int
                             nextpalette[15] = list(map(int,palette[key][15]))     #  type int
