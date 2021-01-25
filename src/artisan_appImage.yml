@@ -1,15 +1,18 @@
-app: Artisan
+app: artisan
 
 ingredients:
   dist: trusty
   sources:
     - deb http://archive.ubuntu.com/ubuntu/ trusty main universe
   script:
-    - cd "/home/appveyor/projects/artisan/src"
+    - oDir=$(pwd)
+    - cd ..
     - file="$(ls artisan-*.deb)"
     - echo  $file
-    - path="file:///home/appveyor/projects/artisan/src/$file"
+    - path="file://$(pwd)/$file"
+    - cd $oDir
     - curl -O -C - $path
+
 script:
   - rm -rf "./usr/bin"
   - mv "./usr/share/artisan" "./usr/bin"
