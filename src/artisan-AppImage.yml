@@ -7,11 +7,9 @@ ingredients:
   script:
     - oDir=$(pwd)
     - cd ..
-    - file="$(ls artisan-*.deb)"
-    - echo  $file
-    - path="file://$(pwd)/$file"
-    - cd $oDir
-    - curl -O -C - $path
+    - path="file://$(pwd)/$(ls artisan-*.deb)" # Serach for the package
+    - cd $oDir # go back to orignal folder
+    - curl -O -C - $path  # use the deb package
 
 script:
   - rm -rf "./usr/bin"
